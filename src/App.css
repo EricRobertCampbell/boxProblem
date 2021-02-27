@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+.redbox {
+  background-color: red;
+  margin: 2px black solid;
+  height: 200px;
+  width: 400px;
+}
