@@ -20,12 +20,8 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-<<<<<<< HEAD
   "include": [
     "src",
     "./src/**/*.ts"
   ]
-=======
-  "include":  ["src", "./src/**/*.ts"]
->>>>>>> bcc1057d8f9292a1ba4de14967afb0a4fb70e64a
 }
