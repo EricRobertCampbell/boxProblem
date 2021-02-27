@@ -1,3 +1,18 @@
+<<<<<<< HEAD
+import React, { Component } from 'react';
+import './App.css';
+import StartBtn from './components/StartBtn';
+import AddBoxBtn from './components/AddBoxBtn';
+
+
+function App() {
+  return (
+    <div>
+      <StartBtn />
+      <AddBoxBtn />
+    </div>
+  );
+=======
 
 import React from "react";
 import logo from "./logo.svg";
@@ -20,6 +35,7 @@ function App() {
 		</>
 	);
 
+>>>>>>> bcc1057d8f9292a1ba4de14967afb0a4fb70e64a
 }
 
 export default App;
