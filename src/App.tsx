@@ -9,7 +9,6 @@ import RedBox from "./components/RedBox";
 import InputBox from "./components/InputBox/InputBox";
 import StartBtn from "./components/StartBtn";
 import AddBoxBtn from "./components/AddBoxBtn";
-import CNRedBox from "./RedBox";
 
 function App() {
 	return (
