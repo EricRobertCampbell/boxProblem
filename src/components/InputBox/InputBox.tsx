@@ -1,19 +1,14 @@
-import React from 'react';
+import React from "react";
 
-const InputBox = () => {
-	return(
-		<div>
-		<div>
-			<p>
-				How many balls?
-			</p>
-		</div>
-		<div>
-			<input/>
-			<button>Create!</button>
-		</div>
-		</div>
+//types
+import { InputBoxProps } from "../../types/global";
 
+const InputBox: React.FC<InputBoxProps> = ({ value, onChange }) => {
+	return (
+		<label>
+			Enter number of balls:{" "}
+			<input value={value} onChange={onChange} name="ball count" />
+		</label>
 	);
-}
+};
 export default InputBox;

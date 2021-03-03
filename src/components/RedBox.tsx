@@ -1,12 +1,25 @@
 import React, { useState, useEffect } from "react";
 
-interface RedBoxProps {
-	count: number;
+// types
+import CSS from "csstype";
+import { BoxProps } from "../types/global";
+
+interface RedBoxProps extends BoxProps {
+	position: number;
+	addBall: (e: React.MouseEvent<HTMLElement>) => void;
+	removeBall: (e: React.MouseEvent<HTMLElement>) => void;
+	explode: () => void;
 }
-const RedBox = (props: RedBoxProps) => {
-	const { count } = props;
+
+const RedBox: React.FC<RedBoxProps> = ({
+	count,
+	onClick,
+	addBall,
+	explode,
+	removeBall,
+}) => {
 	return (
-		<p
+		<div
 			style={{
 				width: "100px",
 				height: "100px",
@@ -16,9 +29,12 @@ const RedBox = (props: RedBoxProps) => {
 				border: "solid 1px black",
 				backgroundColor: "rgba(255,0,0,0.5)",
 			}}
+			onClick={explode}
 		>
+			<button onClick={removeBall}>-</button>
 			{count}
-		</p>
+			<button onClick={addBall}>+</button>{" "}
+		</div>
 	);
 };
 
