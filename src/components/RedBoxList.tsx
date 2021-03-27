@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import RedBox from "./RedBox";
 
+import { GameState } from "../types/global";
+
 interface RedBoxListProps {
 	ballsList: Array<number>;
 	explode: (i: number) => void;
@@ -8,6 +10,7 @@ interface RedBoxListProps {
 	addBall: (i: number) => (e: React.MouseEvent<HTMLElement>) => void;
 	removeBall: (i: number) => (e: React.MouseEvent<HTMLElement>) => void;
 	remaining: number;
+	gameState: GameState;
 }
 
 const RedBoxList: React.FC<RedBoxListProps> = ({
@@ -17,9 +20,10 @@ const RedBoxList: React.FC<RedBoxListProps> = ({
 	addBall,
 	removeBall,
 	remaining,
+	gameState,
 }) => {
 	return (
-		<div style={{ display: "flex" }}>
+		<div style={{ display: "flex", width: "fit-content" }}>
 			{ballsList.map((count: number, index: number) => (
 				<RedBox
 					count={count}
@@ -33,6 +37,8 @@ const RedBoxList: React.FC<RedBoxListProps> = ({
 							? () => explode(index + 1)
 							: () => {}
 					}
+					gameState={gameState}
+					remaining={remaining}
 				/>
 			))}
 		</div>

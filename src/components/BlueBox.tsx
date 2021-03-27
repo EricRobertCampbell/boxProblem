@@ -10,11 +10,12 @@ const BlueBox = (props: BoxProps) => {
 	const baseStyle: CSS.Properties = {
 		width: "100px",
 		height: "100px",
-		display: "flex",
+		display: "inline-flex",
 		alignItems: "center",
 		justifyContent: "center",
 		border: "solid 1px black",
 		backgroundColor: "rgba(0,0,255,0.5)",
+		marginRight: "25px",
 	};
 	const mergedStyle = Object.assign({}, baseStyle, styles);
 

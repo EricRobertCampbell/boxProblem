@@ -6,8 +6,8 @@ import BallCounter from "./components/BallCounter";
 import BlueBox from "./components/BlueBox";
 import RedBoxList from "./components/RedBoxList";
 import RedBox from "./components/RedBox";
-import InputBox from "./components/InputBox/InputBox";
-import StartBtn from "./components/StartBtn";
+import InputBox from "./components/InputBox";
+import { StartButton } from "./components/StartBtn";
 import AddBoxBtn from "./components/AddBoxBtn";
 
 // types
@@ -18,7 +18,11 @@ const App: any = () => {
 	const [ballsList, setBallsList] = useState<number[]>([0, 0, 0, 0, 0]);
 	const [blueBoxCount, setBlueBoxCount] = useState<number>(0);
 	const [remaining, setRemaining] = useState<number>(0);
+	const [gameState, setGameState] = useState<GameState>("setup");
+	const [readyToStart, setReadyToStart] = useState<boolean>(false);
+	const [boardOkToStart, setBoardOkToStart] = useState(false);
 
+	// update number of unallocated balls
 	useEffect(() => {
 		setRemaining(
 			numBalls -
@@ -27,8 +31,88 @@ const App: any = () => {
 		);
 	}, [ballsList, blueBoxCount, numBalls]);
 
+	// determine when the game is ready to begin
+	useEffect(() => {
+		if (
+			numBalls > 0 &&
+			ballsList.length > 0 &&
+			remaining === 0 &&
+			boardOkToStart
+		) {
+			setReadyToStart(true);
+		} else {
+			setReadyToStart(false);
+		}
+	}, [numBalls, ballsList, remaining]);
+
+	// check for having won
+	useEffect(() => {
+		if (
+			gameState === "ongoing" &&
+			numBalls > 0 &&
+			blueBoxCount === numBalls
+		) {
+			setGameState("won");
+		}
+	}, [blueBoxCount, numBalls, gameState]);
+
+	// check for having lost
+	useEffect(() => {
+		if (gameState === "ongoing") {
+			// check: if ANY are too big or if all are too small
+			let numReadyToExplode = 0;
+			let numNonZero = 0;
+			for (let i = 0; i < ballsList.length; i++) {
+				const count = ballsList[i];
+				const position = i + 1;
+				if (count === position) {
+					numReadyToExplode++;
+				}
+				if (count > position) {
+					console.log(`Box ${position} impossible to explode;  lost`);
+					setGameState("lost");
+					return;
+				}
+				if (count !== 0) {
+					numNonZero++;
+				}
+			}
+			if (numNonZero > 0 && numReadyToExplode === 0) {
+				setGameState("lost");
+			}
+		}
+	}, [gameState, ballsList]);
+
+	// check if the game, as being set up, is OK to start
+	useEffect(() => {
+		if (gameState !== "setup") {
+			return;
+		}
+		// check: if ANY are too big or if all are too small
+		let numReadyToExplode = 0;
+		let numNonZero = 0;
+		for (let i = 0; i < ballsList.length; i++) {
+			const count = ballsList[i];
+			const position = i + 1;
+			if (count === position) {
+				numReadyToExplode++;
+			}
+			if (count > position) {
+				setBoardOkToStart(false);
+				return;
+			}
+			if (count !== 0) {
+				numReadyToExplode++;
+			}
+		}
+		if (numReadyToExplode === 0) {
+			setBoardOkToStart(false);
+			return;
+		}
+		setBoardOkToStart(true);
+	}, [ballsList, gameState]);
+
 	const explode: (i: number) => void = (i: number) => {
-		console.log(`explodeing with ${i}`);
 		setBlueBoxCount((oldValue) => oldValue + 1);
 		setBallsList((oldValue) =>
 			oldValue.map((value, idx) => {
@@ -64,7 +148,6 @@ const App: any = () => {
 	};
 
 	const addBox: () => void = () => {
-		console.log(`addBox`);
 		setBallsList((oldValue) => [...oldValue, 0]);
 	};
 	const removeBox: () => void = () => {
@@ -73,28 +156,88 @@ const App: any = () => {
 			setBallsList((oldValue) => oldValue.slice(0, oldValue.length - 1));
 		}
 	};
+
+	const resetGame: () => void = () => {
+		console.log("Resetting game:");
+		setNumBalls(0);
+		setGameState("setup");
+		setBlueBoxCount(0);
+		setBallsList([0, 0, 0, 0, 0]);
+	};
+
 	return (
-		<>
-			<StartBtn />
-			<button onClick={() => removeBox()}>Remove Box</button>
-			<button onClick={() => addBox()}>Add Box</button>
-			<BallCounter count={remaining} />
-			<BlueBox count={blueBoxCount} />
-			<RedBoxList
-				ballsList={ballsList}
-				explode={explode}
-				addBall={addBallGenerator}
-				removeBall={removeBallGenerator}
-				remaining={remaining}
-			/>
-			<InputBox
-				value={numBalls || ""}
-				onChange={(e: React.FormEvent<HTMLInputElement>): void => {
-					setNumBalls(Number(e.currentTarget.value));
+		<div
+			style={{
+				maxWidth: "800px",
+				display: "flex",
+				flexDirection: "column",
+				alignItems: "center",
+			}}
+		>
+			<div
+				style={{
+					display: "flex",
+					flexDirection: "row",
 				}}
-			/>
-			{numBalls > 0 && blueBoxCount === numBalls ? <p>Victory!</p> : null}
-		</>
+			>
+				<div
+					id="setupDiv"
+					style={{
+						width: "50%",
+						display: "flex",
+						flexDirection: "column",
+					}}
+				>
+					<InputBox
+						value={numBalls || ""}
+						onChange={(
+							e: React.FormEvent<HTMLInputElement>
+						): void => {
+							setNumBalls(Number(e.currentTarget.value));
+						}}
+						disabled={gameState !== "setup"}
+					/>
+					<div>
+						<button
+							disabled={gameState !== "setup"}
+							onClick={() => removeBox()}
+						>
+							Remove Box
+						</button>
+						<button
+							disabled={gameState !== "setup"}
+							onClick={() => addBox()}
+						>
+							Add Box
+						</button>
+					</div>
+				</div>
+				<StartButton
+					disabled={!readyToStart || gameState !== "setup"}
+					onClick={() => setGameState("ongoing")}
+				/>
+			</div>
+			{<BallCounter count={remaining} gameState={gameState} />}
+			<div style={{ display: "flex" }}>
+				<BlueBox count={blueBoxCount} />
+				<RedBoxList
+					ballsList={ballsList}
+					explode={explode}
+					addBall={addBallGenerator}
+					removeBall={removeBallGenerator}
+					remaining={remaining}
+					gameState={gameState}
+				/>
+			</div>
+			{gameState === "won" ? <p>Victory!</p> : null}
+			{gameState === "lost" ? <p>You lost!</p> : null}
+
+			{gameState === "won" || gameState === "lost" ? (
+				<button style={{ flexBasis: "auto" }} onClick={resetGame}>
+					Reset
+				</button>
+			) : null}
+		</div>
 	);
 };
 

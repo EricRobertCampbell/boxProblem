@@ -10,7 +10,7 @@ export interface InputBoxProps {
 	value: number | "";
 	onChange: (event: React.FormEvent<HTMLInputElement>) => void;
 	styles?: CSS.Properties;
+	disabled?: boolean;
 }
 
 export type GameState = "setup" | "ongoing" | "won" | "lost";
-

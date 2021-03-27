@@ -1,11 +1,18 @@
-import '../css/style.css';
+import "../css/style.css";
 
-const startBtn = () =>{
-    return (
-        <button className="start-game-btn">Start Game!</button>
-    )
+type StartButtonProps = {
+	disabled?: boolean;
+	onClick?: () => void;
 };
 
-
-
-export default startBtn;
+export const StartButton = ({ disabled = false, onClick = () => {} }) => {
+	return (
+		<button
+			disabled={disabled}
+			onClick={onClick}
+			className="start-game-btn"
+		>
+			Start Game!
+		</button>
+	);
+};
