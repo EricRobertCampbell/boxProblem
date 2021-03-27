@@ -72,14 +72,13 @@ const RedBox: React.FC<RedBoxProps> = ({
 	return (
 		<div>
 			<div
-				className={ "redBox" + ( readyToExplode ? ' readyToExplode' : '' ) } 
+				className={"redBox" + (readyToExplode ? " readyToExplode" : "")}
 				style={{
 					width: "100px",
 					height: "100px",
 					display: "inline-flex",
 					alignItems: "center",
 					justifyContent: "center",
-					border: "solid 1px black",
 					background: impossibleToContinue
 						? "black"
 						: `linear-gradient(to top, hsla(0, 100%, 50%, 0.5) ${percentComplete}%, hsla(0, 100%, 50%, 0.25) ${percentComplete}%)`,

@@ -12,7 +12,9 @@ const BlueBox = (props: BlueBoxProps) => {
 	const { count, onClick, styles, numBalls } = props;
 
 	let percentComplete = (count / numBalls) * 100;
-	console.log({ count, numBalls, percentComplete });
+	if (Number.isNaN(percentComplete)) {
+		percentComplete = 0;
+	}
 	const baseStyle: CSS.Properties = {
 		width: "100px",
 		height: "100px",
