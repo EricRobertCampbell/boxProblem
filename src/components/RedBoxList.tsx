@@ -11,6 +11,7 @@ interface RedBoxListProps {
 	removeBall: (i: number) => (e: React.MouseEvent<HTMLElement>) => void;
 	remaining: number;
 	gameState: GameState;
+	numBalls: number;
 }
 
 const RedBoxList: React.FC<RedBoxListProps> = ({
@@ -21,6 +22,7 @@ const RedBoxList: React.FC<RedBoxListProps> = ({
 	removeBall,
 	remaining,
 	gameState,
+	numBalls,
 }) => {
 	return (
 		<div style={{ display: "flex", width: "fit-content" }}>
@@ -39,6 +41,7 @@ const RedBoxList: React.FC<RedBoxListProps> = ({
 					}
 					gameState={gameState}
 					remaining={remaining}
+					numBalls={numBalls}
 				/>
 			))}
 		</div>

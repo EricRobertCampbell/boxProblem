@@ -219,7 +219,7 @@ const App: any = () => {
 			</div>
 			{<BallCounter count={remaining} gameState={gameState} />}
 			<div style={{ display: "flex" }}>
-				<BlueBox count={blueBoxCount} />
+				<BlueBox count={blueBoxCount} numBalls={numBalls} />
 				<RedBoxList
 					ballsList={ballsList}
 					explode={explode}
@@ -227,6 +227,7 @@ const App: any = () => {
 					removeBall={removeBallGenerator}
 					remaining={remaining}
 					gameState={gameState}
+					numBalls={numBalls}
 				/>
 			</div>
 			{gameState === "won" ? <p>Victory!</p> : null}

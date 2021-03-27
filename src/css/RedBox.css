@@ -1,0 +1,20 @@
+.redBox .boxButton {
+	opacity: 0.5;
+	transition: opacity 1s ease;
+}
+.redBox:hover .boxButton {
+	opacity: 1;
+}
+
+.redBox.readyToExplode {
+	animation: 1s infinite alternate pulse;
+}
+
+@keyframes pulse {
+	0% {
+		background: hsla(0, 100%, 50%, 0.5);
+	}
+	100% {
+		background: hsla(0, 100%, 50%, 1);
+	}
+}

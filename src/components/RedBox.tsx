@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 
+//css
+import "../css/RedBox.css";
+
 // types
 import CSS from "csstype";
 import { BoxProps, GameState } from "../types/global";
@@ -11,6 +14,7 @@ interface RedBoxProps extends BoxProps {
 	explode: () => void;
 	gameState: GameState;
 	remaining: number;
+	numBalls: number;
 }
 
 const RedBox: React.FC<RedBoxProps> = ({
@@ -22,6 +26,7 @@ const RedBox: React.FC<RedBoxProps> = ({
 	gameState,
 	remaining,
 	position,
+	numBalls,
 }) => {
 	const [readyToExplode, setReadyToExplode] = useState<boolean>(false);
 	const [ableToAdd, setAbleToAdd] = useState<boolean>(false);
@@ -62,9 +67,12 @@ const RedBox: React.FC<RedBoxProps> = ({
 		}
 	}, [count, position]);
 
+	const percentComplete = (count / position) * 100;
+
 	return (
 		<div>
 			<div
+				className={ "redBox" + ( readyToExplode ? ' readyToExplode' : '' ) } 
 				style={{
 					width: "100px",
 					height: "100px",
@@ -72,15 +80,14 @@ const RedBox: React.FC<RedBoxProps> = ({
 					alignItems: "center",
 					justifyContent: "center",
 					border: "solid 1px black",
-					background: readyToExplode
-						? "linear-gradient(red, blue)"
-						: impossibleToContinue
-						? "linear-gradient(red, black)"
-						: "linear-gradient(red, red)",
+					background: impossibleToContinue
+						? "black"
+						: `linear-gradient(to top, hsla(0, 100%, 50%, 0.5) ${percentComplete}%, hsla(0, 100%, 50%, 0.25) ${percentComplete}%)`,
 				}}
 				onClick={gameState === "ongoing" ? explode : () => {}}
 			>
 				<button
+					className="boxButton"
 					style={{ visibility: ableToRemove ? "visible" : "hidden" }}
 					onClick={removeBall}
 				>
@@ -88,6 +95,7 @@ const RedBox: React.FC<RedBoxProps> = ({
 				</button>
 				{count}
 				<button
+					className="boxButton"
 					style={{ visibility: ableToAdd ? "visible" : "hidden" }}
 					onClick={addBall}
 				>
