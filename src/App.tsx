@@ -172,12 +172,31 @@ const App: any = () => {
 				display: "flex",
 				flexDirection: "column",
 				alignItems: "center",
+				backgroundColor: "hsl(36, 100%, 80%)",
+				padding: "10px",
+				borderRadius: "10px",
+				boxShadow: "5px 5px 2px grey",
 			}}
 		>
+			<h1>Box Game</h1>
+			<div className="rules">
+				<h2>Rules</h2>
+				<p>
+					Your goal is to fill the blue box with all of the balls!
+					Initially, you can only put balls into the red boxes on the
+					right. Once there are the same number of balls in a red box
+					as its number (e.g. two balls in the second box, three in
+					the third...), you can <emph>explode</emph> it! When that
+					happens, one ball from that box is moved into each of the
+					boxes with a lower number, and one is placed into the blue
+					box.
+				</p>
+			</div>
 			<div
 				style={{
 					display: "flex",
 					flexDirection: "row",
+					justifyContent: "space-between",
 				}}
 			>
 				<div
@@ -197,7 +216,7 @@ const App: any = () => {
 						}}
 						disabled={gameState !== "setup"}
 					/>
-					<div>
+					<span>
 						<button
 							disabled={gameState !== "setup"}
 							onClick={() => removeBox()}
@@ -210,7 +229,7 @@ const App: any = () => {
 						>
 							Add Box
 						</button>
-					</div>
+					</span>
 				</div>
 				<StartButton
 					disabled={!readyToStart || gameState !== "setup"}

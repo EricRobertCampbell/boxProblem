@@ -1,17 +1,14 @@
-.start-game-btn,
-.add-box-btn {
-	background-color: white; /* Green */
-	padding: 15px 32px;
-	text-align: center;
-	color: black;
-	display: inline-block;
-	font-size: 16px;
-	border: 2px solid black;
-}
+/* .start-game-btn, */
+/* .add-box-btn { */
+/* 	background-color: white; */
+/* 	padding: 15px 32px; */
+/* 	text-align: center; */
+/* 	color: black; */
+/* 	display: inline-block; */
+/* 	border: 2px solid black; */
+/* } */
 
-.redbox {
-	background-color: red;
-	margin: 2px black solid;
-	height: 200px;
-	width: 400px;
+
+button {
+	font-size: 1rem;
 }

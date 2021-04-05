@@ -6,7 +6,7 @@ interface BallCounterProps {
 	count: number;
 	gameState: GameState;
 }
-const BallCounter = ({ count, gameState }) => {
+const BallCounter = ({ count, gameState }: BallCounterProps) => {
 	return (
 		<p style={{ visibility: gameState === "setup" ? "visible" : "hidden" }}>
 			Balls Remaining: {count}

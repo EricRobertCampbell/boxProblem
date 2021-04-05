@@ -1,6 +1,10 @@
 .redBox {
+	background-color: red;
+	height: 200px;
+	width: 400px;
 	border: solid 1px black;
 }
+
 .redBox .boxButton {
 	opacity: 0.5;
 	transition: opacity 1s ease;

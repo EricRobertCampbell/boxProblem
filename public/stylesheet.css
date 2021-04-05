@@ -1,0 +1,10 @@
+#root {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: flex-start;
+	padding: 25px 0;
+	background-color: hsl(36, 100%, 90%);
+	min-height: 100vh;
+	box-sizing: border-box;
+}
